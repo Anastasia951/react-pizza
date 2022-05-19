@@ -4,9 +4,12 @@ export default function Sort({items}) {
 
   const [visibleSort, setVisibleSort] = useState(false)
   const [activeItem, setActiveItem] = useState(0)
+
   const toggleActive = () => setVisibleSort(visibleSort => !visibleSort)
+
   const changeActiveItem = (idx) => setActiveItem(idx)
   const sortRef = useRef()
+
   useEffect(() => {
     const func = (event) => {
       if (!event.path.includes(sortRef.current)) {
@@ -34,11 +37,11 @@ export default function Sort({items}) {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span ref={sortRef} onClick={toggleActive}>{items[activeItem]}</span>
+        <span ref={sortRef} onClick={toggleActive}>{items[activeItem].name}</span>
       </div>
       {visibleSort && <div className="sort__popup">
         <ul>
-          {items.map((item, idx) => <li onClick={() => changeActiveItem(idx)} key={`${item}_${idx}`} className={activeItem === idx ? 'active' : ''}>{item}</li>)}
+          {items.map((item, idx) => <li onClick={() => changeActiveItem(idx)} key={`${item.type}_${idx}`} className={activeItem === idx ? 'active' : ''}>{item.name}</li>)}
         </ul>
       </div>}
     </div>

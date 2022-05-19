@@ -1,27 +1,47 @@
-import React from 'react'
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 
-export default function PizzaBlock() {
+function PizzaBlock({pizza}) {
+  const types = ['тонкое', 'традиционное']
+  const dimension = [26, 30, 40]
+
+  const [activeType, setActiveType] = useState(pizza.types[0])
+  const [activeSize, setActiveSize] = useState(pizza.sizes[0])
+  
+  const selectItem = (index) => {
+    setActiveType(index)
+  }
+  const selectSize = (index) => {
+    setActiveSize(index)
+  }
   return (
     <div className="pizza-block">
       <img
         className="pizza-block__image"
-        src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-        alt="Pizza"
+        src={pizza.imageUrl}
+        alt={pizza.name}
       />
-      <h4 className="pizza-block__title">Чизбургер-пицца</h4>
+      <h4 className="pizza-block__title">{pizza.name}</h4>
       <div className="pizza-block__selector">
         <ul>
-          <li className="active">тонкое</li>
-          <li>традиционное</li>
+          {
+            pizza.types.map((type, index) => <li key={pizza.id + index} onClick={() => selectItem(type)}
+            className={pizza.types.includes(type) ? activeType === type ? 'active' : '' : 'disabled'}
+            >{types[index]}</li>
+            )
+          }
         </ul>
         <ul>
-          <li className="active">26 см.</li>
-          <li>30 см.</li>
-          <li>40 см.</li>
+        {
+            pizza.sizes.map((size, index) => <li key={pizza.id + size} onClick={() => selectSize(size)}
+            className={pizza.sizes.includes(size) ? size === activeSize ? 'active' : '' : 'disabled'}
+            >{dimension[index] + ` см`}</li>
+            )
+          }
         </ul>
       </div>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">от 395 ₽</div>
+        <div className="pizza-block__price">от {pizza.price} ₽</div>
         <div className="button button--outline button--add">
           <svg
             width="12"
@@ -42,3 +62,24 @@ export default function PizzaBlock() {
     </div>
   )
 }
+
+// PizzaBlock.propTypes = {
+//   pizza: {
+//     name: PropTypes.string.isRequired,
+//     imageUrl: PropTypes.string.isRequired,
+//     sizes: PropTypes.arrayOf([PropTypes.number]),
+//     types: PropTypes.arrayOf([PropTypes.string]),
+//     price: PropTypes.number.isRequired,
+//   }
+// }
+
+// PizzaBlock.defaultProps = {
+//   pizza: {
+//     types: [],
+//     sizes: [],
+//     name: 'Название',
+//     imageUrl: '',
+//     price: 0
+//   }
+// }
+export default PizzaBlock
