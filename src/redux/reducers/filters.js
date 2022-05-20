@@ -9,7 +9,10 @@ function filterReducer(state = initialState, action) {
       sortBy: action.payload
     }
   } else if (action.type === 'SET_CATEGORY') {
-
+    return {
+      ...state,
+      category: action.payload
+    }
   }
 
   return state

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 
-export default function Sort({items}) {
+export default React.memo(function Sort({items}) {
 
   const [visibleSort, setVisibleSort] = useState(false)
   const [activeItem, setActiveItem] = useState(0)
@@ -47,3 +47,4 @@ export default function Sort({items}) {
     </div>
   )
 }
+)
