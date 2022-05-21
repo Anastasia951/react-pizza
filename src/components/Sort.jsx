@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
 
-export default React.memo(function Sort({items}) {
+export default React.memo(function Sort({items, activeSortType, onClickSort}) {
 
   const [visibleSort, setVisibleSort] = useState(false)
-  const [activeItem, setActiveItem] = useState(0)
 
   const toggleActive = () => setVisibleSort(visibleSort => !visibleSort)
-
-  const changeActiveItem = (idx) => setActiveItem(idx)
+  let activeLabel = items.find(item => item.type === activeSortType).name
+  const changeActiveItem = (idx) => onClickSort(idx)
   const sortRef = useRef()
 
   useEffect(() => {
@@ -37,11 +36,11 @@ export default React.memo(function Sort({items}) {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span ref={sortRef} onClick={toggleActive}>{items[activeItem].name}</span>
+        <span ref={sortRef} onClick={toggleActive}>{activeLabel}</span>
       </div>
       {visibleSort && <div className="sort__popup">
         <ul>
-          {items.map((item, idx) => <li onClick={() => changeActiveItem(idx)} key={`${item.type}_${idx}`} className={activeItem === idx ? 'active' : ''}>{item.name}</li>)}
+          {items.map((item, idx) => <li onClick={() => changeActiveItem(item.type)} key={`${item.type}_${idx}`} className={activeSortType === item.type ? 'active' : ''}>{item.name}</li>)}
         </ul>
       </div>}
     </div>
