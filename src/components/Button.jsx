@@ -1,10 +1,15 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 export default function Button() {
+  const {price, count} = useSelector(({cart}) => ({
+    price: cart.totalPrice,
+    count: cart.totalCount
+  }))
   return (
     <div className="header__cart">
       <span className="button button--cart">
-        <span>520 ₽</span>
+        <span>{price} ₽</span>
         <div className="button__delimiter"></div>
         <svg
           width="18"
@@ -35,7 +40,7 @@ export default function Button() {
             strokeLinejoin="round"
           />
         </svg>
-        <span>3</span>
+        <span>{count}</span>
       </span>
     </div>
   )

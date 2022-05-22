@@ -4,14 +4,15 @@ export default React.memo(function Sort({items, activeSortType, onClickSort}) {
 
   const [visibleSort, setVisibleSort] = useState(false)
 
-  const toggleActive = () => setVisibleSort(visibleSort => !visibleSort)
+  const toggleActive = () => setVisibleSort(!visibleSort)
   let activeLabel = items.find(item => item.type === activeSortType).name
   const changeActiveItem = (idx) => onClickSort(idx)
   const sortRef = useRef()
 
   useEffect(() => {
     const func = (event) => {
-      if (!event.path.includes(sortRef.current)) {
+      const path = event.path || (event.composedPath && event.composedPath())
+      if (!(path.includes(sortRef.current))) {
         toggleActive()
       }
     }
