@@ -10,9 +10,9 @@ const fetchPizzas = (category, sortBy) => (dispatch) => {
   dispatch(setLoaded(false))
   let url = ''
   if (category === 0) {
-    url = `http://localhost:3001/pizzas?_sort=${sortBy}&_order=desc`
+    url = `/pizzas?_sort=${sortBy}&_order=desc`
   } else {
-    url = `http://localhost:3001/pizzas?category=${category}&_sort=${sortBy}&_order=desc`
+    url = `/pizzas?category=${category}&_sort=${sortBy}&_order=desc`
   }
   axios.get(url).then(({ data }) => dispatch(setPizzas(data)))
 }
