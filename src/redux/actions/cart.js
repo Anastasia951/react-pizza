@@ -17,5 +17,17 @@ const addPizza = (payload) => {
     payload
   }
 }
+const clearCart = () => {
+  return {
+    type: 'CLEAR_CART'
+  }
+}
 
-export { setTotalCount, setTotalPrice, addPizza }
+const removeCartItem = (id) => {
+  return {
+    type: 'REMOVE_CART_ITEM',
+    payload: id,
+  }
+}
+
+export { setTotalCount, setTotalPrice, addPizza, clearCart, removeCartItem }

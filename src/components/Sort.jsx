@@ -11,8 +11,7 @@ export default React.memo(function Sort({items, activeSortType, onClickSort}) {
 
   useEffect(() => {
     const func = (event) => {
-      const path = event.path || (event.composedPath && event.composedPath())
-      if (!(path.includes(sortRef.current))) {
+      if (event.target === sortRef.current) {
         toggleActive()
       }
     }

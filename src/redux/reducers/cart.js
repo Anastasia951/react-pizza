@@ -20,7 +20,7 @@ function cartReducer(state = initialState, action) {
   } else if (action.type === 'ADD_PIZZA') {
     const currentPizzaItems = !state.items[action.payload.id]
       ? [action.payload]
-      : [...state.items[action.payload.id], action.payload]
+      : [...state.items[action.payload.id].items, action.payload]
     const newItems = {
       ...state.items,
       [action.payload.id]: {
@@ -28,12 +28,30 @@ function cartReducer(state = initialState, action) {
         totalPrice: getTotalPrice(currentPizzaItems)
       }
     }
-    const arr = [].concat.apply([], Object.values(newItems))
+    const totalCount = Object.keys(newItems).reduce((sum, key) => newItems[key].items.length + sum, 0)
+    const totalPrice = Object.keys(newItems).reduce((sum, key) => newItems[key].totalPrice + sum, 0)
     return {
       ...state,
       items: newItems,
-      totalCount: arr.length,
-      totalPrice: getTotalPrice(arr)
+      totalCount,
+      totalPrice,
+    }
+  } else if (action.type === 'CLEAR_CART') {
+    return {
+      items: {},
+      totalCount: 0,
+      totalPrice: 0
+    }
+  } else if (action.type === 'REMOVE_CART_ITEM') {
+    const newItems = { ...state.items }
+    const newTotalPrice = state.totalPrice - newItems[action.payload].totalPrice
+    const newTotalCount = state.totalCount - newItems[action.payload].items.length
+    delete newItems[action.payload]
+    return {
+      ...state,
+      items: newItems,
+      totalCount: newTotalCount,
+      totalPrice: newTotalPrice
     }
   }
 

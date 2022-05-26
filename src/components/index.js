@@ -6,5 +6,6 @@ import PizzaBlockLoader from './PizzaBlockLoader';
 import AddToCart from './AddToCart';
 import Button from './Button';
 import CartPizzaBlock from './CartPizzaBlock';
+import EmptyCart from './EmptyCart';
 
-export { Categories, Header, PizzaBlock, Sort, PizzaBlockLoader, AddToCart, Button, CartPizzaBlock }
+export { Categories, Header, PizzaBlock, Sort, PizzaBlockLoader, AddToCart, Button, CartPizzaBlock, EmptyCart }
