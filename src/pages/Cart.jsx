@@ -2,7 +2,11 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CartPizzaBlock } from '../components'
 import { EmptyCart } from '../components/'
-import { clearCart } from '../redux/actions/cart'
+import {
+  clearCart,
+  decrementPizza,
+  incrementPizza,
+} from '../redux/actions/cart'
 import { removeCartItem } from '../redux/actions/cart'
 
 export default function Cart() {
@@ -19,6 +23,12 @@ export default function Cart() {
   }
   const removePizza = id => {
     dispatch(removeCartItem(id))
+  }
+  const minusPizza = id => {
+    dispatch(incrementPizza(id))
+  }
+  const plusPizza = id => {
+    dispatch(decrementPizza(id))
   }
   return (
     <div className='content'>
@@ -108,6 +118,8 @@ export default function Cart() {
                   totalPrice={items[pizza.id].totalPrice}
                   totalCount={items[pizza.id].items.length}
                   removePizza={removePizza}
+                  minusPizza={minusPizza}
+                  plusPizza={plusPizza}
                 />
               ))}
             </div>

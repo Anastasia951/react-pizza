@@ -28,8 +28,10 @@ function cartReducer(state = initialState, action) {
         totalPrice: getTotalPrice(currentPizzaItems)
       }
     }
+
     const totalCount = Object.keys(newItems).reduce((sum, key) => newItems[key].items.length + sum, 0)
     const totalPrice = Object.keys(newItems).reduce((sum, key) => newItems[key].totalPrice + sum, 0)
+
     return {
       ...state,
       items: newItems,
@@ -52,6 +54,39 @@ function cartReducer(state = initialState, action) {
       items: newItems,
       totalCount: newTotalCount,
       totalPrice: newTotalPrice
+    }
+  } else if (action.type === 'INCREMENT_PIZZA') {
+    const newItems = [
+      ...state.items[action.payload].items,
+      state.items[action.payload].items[0]
+    ]
+    return {
+      ...state,
+      items: {
+        ...state.items,
+        [action.payload]: {
+          items: newItems,
+          totalPrice: getTotalPrice(newItems)
+        }
+      },
+      totalCount: state.totalCount + 1,
+      totalPrice: state.totalPrice + newItems[0].price
+    }
+  } else if (action.type === 'DECREMENT_PIZZA') {
+    const prevItems = state.items[action.payload].items
+    const newItems = prevItems.length > 1 ? prevItems.slice(1) : prevItems
+
+    return {
+      ...state,
+      items: {
+        ...state.items,
+        [action.payload]: {
+          items: newItems,
+          totalPrice: newItems.length > 1 ? getTotalPrice(newItems) : state.items[action.payload].items[0].price
+        }
+      },
+      totalCount: prevItems.length > 1 ? state.totalCount - 1 : state.totalCount,
+      totalPrice: prevItems.length > 1 ? state.totalPrice - newItems[0].price : state.totalPrice
     }
   }
 

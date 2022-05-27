@@ -7,6 +7,8 @@ export default function CartPizzaBlock({
   totalPrice,
   totalCount,
   removePizza,
+  minusPizza,
+  plusPizza,
 }) {
   return (
     <div className='cart__item'>
@@ -24,7 +26,9 @@ export default function CartPizzaBlock({
         </p>
       </div>
       <div className='cart__item-count'>
-        <div className='button button--outline button--circle cart__item-count-minus'>
+        <div
+          className='button button--outline button--circle cart__item-count-minus'
+          onClick={() => plusPizza(id)}>
           <svg
             width='10'
             height='10'
@@ -42,7 +46,9 @@ export default function CartPizzaBlock({
           </svg>
         </div>
         <b>{totalCount}</b>
-        <div className='button button--outline button--circle cart__item-count-plus'>
+        <div
+          className='button button--outline button--circle cart__item-count-plus'
+          onClick={() => minusPizza(id)}>
           <svg
             width='10'
             height='10'

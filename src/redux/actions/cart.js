@@ -30,4 +30,18 @@ const removeCartItem = (id) => {
   }
 }
 
-export { setTotalCount, setTotalPrice, addPizza, clearCart, removeCartItem }
+const incrementPizza = (id) => {
+  return {
+    type: 'INCREMENT_PIZZA',
+    payload: id,
+  }
+}
+
+const decrementPizza = (id) => {
+  return {
+    type: 'DECREMENT_PIZZA',
+    payload: id,
+  }
+}
+
+export { setTotalCount, setTotalPrice, addPizza, clearCart, removeCartItem, incrementPizza, decrementPizza }
